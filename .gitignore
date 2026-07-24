@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.pytest_cache/
+
+# Training / data artifacts (created at runtime, dataset-scale)
+results/
+datasets/
+checkpoints/
+wandb/
+logs/
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
+*.swp
+
+# Local env
+.env
+.env.local

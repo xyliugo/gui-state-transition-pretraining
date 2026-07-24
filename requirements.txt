@@ -1,0 +1,30 @@
+# Core dependencies for State Transition Pretraining (STP)
+torch>=2.4.0
+torchvision>=0.19.0
+transformers>=4.45.0
+accelerate>=0.34.0
+safetensors>=0.4.0
+
+# Data processing
+pyarrow>=11.0.0
+Pillow>=9.0.0
+numpy>=1.24.0
+PyYAML>=6.0
+
+# Training utilities
+wandb
+einops>=0.8.0
+scipy>=1.10.0
+
+# Tokenizer
+sentencepiece>=0.1.99
+huggingface_hub>=0.20.0
+
+# Evaluation
+openai>=1.0.0
+editdistance
+
+# Optional but recommended
+flash-attn>=2.5.0  # Install separately: pip install flash-attn --no-build-isolation
+tqdm
+triton; sys_platform != 'win32'
