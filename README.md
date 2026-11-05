@@ -61,6 +61,34 @@ python data_preparation/subsample_agent_tasks.py \
 # See data_preparation/README.md for the _3k (AndroidControl) and _1k (GUIOdyssey) commands.
 ```
 
+## Model Zoo
+
+Checkpoints are available on [Hugging Face](https://huggingface.co/xyliu6/gui-state-transition-pretraining). Each folder contains the EMA weights as `ema.safetensors`.
+
+**STP checkpoints** (Stage 1)
+
+| Checkpoint | Pretraining data |
+|---|---|
+| [`stp/agentnet-winmac`](https://huggingface.co/xyliu6/gui-state-transition-pretraining/tree/main/stp/agentnet-winmac) | 320K AgentNet Win&Mac transitions |
+| [`stp/android-control`](https://huggingface.co/xyliu6/gui-state-transition-pretraining/tree/main/stp/android-control) | 67K AndroidControl transitions |
+| [`stp/guiodyssey`](https://huggingface.co/xyliu6/gui-state-transition-pretraining/tree/main/stp/guiodyssey) | 95K GUIOdyssey transitions |
+
+**FT checkpoints** (Stage 2, fine-tuned from STP)
+
+| Checkpoint | Fine-tuning data | Benchmark |
+|---|---|---|
+| [`ft/agentnet-winmac-2k`](https://huggingface.co/xyliu6/gui-state-transition-pretraining/tree/main/ft/agentnet-winmac-2k) | 2K AgentNet Win&Mac trajectories | AgentNetBench |
+| [`ft/agentnet-winmac-18k`](https://huggingface.co/xyliu6/gui-state-transition-pretraining/tree/main/ft/agentnet-winmac-18k) | 18K AgentNet Win&Mac trajectories | AgentNetBench |
+| [`ft/android-control-3k`](https://huggingface.co/xyliu6/gui-state-transition-pretraining/tree/main/ft/android-control-3k) | 3K AndroidControl trajectories | AndroidControl-High |
+| [`ft/guiodyssey-1k`](https://huggingface.co/xyliu6/gui-state-transition-pretraining/tree/main/ft/guiodyssey-1k) | 1K GUIOdyssey trajectories | GUIOdyssey |
+
+To evaluate a downloaded checkpoint, pass its folder to `scripts/eval.sh`:
+
+```bash
+hf download xyliu6/gui-state-transition-pretraining --include "ft/guiodyssey-1k/*" --local-dir ./ckpts
+bash scripts/eval.sh ./ckpts/ft/guiodyssey-1k guiodyssey
+```
+
 ## Training
 
 STP is a two-stage recipe: **Stage 1** pretrains on state transitions (inverse + forward), **Stage 2** fine-tunes on task trajectories from the STP checkpoint.
